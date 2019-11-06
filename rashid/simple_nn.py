@@ -51,3 +51,10 @@ class NeuralNetwork:
 
         return final_outputs
 
+
+if __name__ == "__main__":
+
+    nn = NeuralNetwork(3, 3, 3, 0.3)
+    res = nn.query([1.0, 0.5, -1.5])
+    print(res)
+
