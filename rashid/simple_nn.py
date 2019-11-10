@@ -26,13 +26,42 @@ class NeuralNetwork:
         # set activation functoin
         self.activation_function = lambda x: scipy.special.expit(x)
 
-    def train(self):
+    def train(self, input_list, target_list):
         """
         Train network.
 
         :return:
         """
-        pass
+
+        # transform input and target values into 2d array matrix
+        inputs = numpy.array(input_list, ndmin=2).T
+        target = numpy.array(target_list, ndmin=2).T
+
+        # compute input signals for hidden layer
+        hidden_inputs = numpy.dot(self.weights_inner_to_hidden, inputs)
+
+        # compute output signals for hidden layer
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+        # compute input signals for output layer
+        final_inputs = numpy.dot(self.weights_hidden_to_output, hidden_outputs)
+
+        # compute output signals for output layer
+        final_output = self.activation_function(final_inputs)
+
+        # compute network error = target values - final output values
+        output_errors = target - final_output
+
+        # compute hidden layer errors
+        hidden_errors = numpy.dot(self.weights_hidden_to_output.T, output_errors)
+
+        # update weights between hidden and output layers
+        self.weights_hidden_to_output += self.learning_rate * numpy.dot((output_errors * final_output * (1.0 - final_output)),
+                                                                        hidden_outputs.T)
+
+        # update weights between input and hidden layers
+        self.weights_inner_to_hidden += self.learning_rate * numpy.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs),
+                                                                        inputs.T))
 
     def query(self, inputs_list):
         """
