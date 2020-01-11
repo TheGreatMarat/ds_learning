@@ -170,3 +170,18 @@ And unpack arhive:
 
 `-c` for count
 `-r dirname` for find in all files in dir
+
+
+## Edit the $PATH
+
+Use `echo $PATH` for show paths in `$PATH`.
+
+#### Add new path
+Use `export PATH=$PATH:new_path` for adding path.
+
+#### Remove or edit path
+1. Copy result of `echo $PATH`
+2. Edit the result
+3. `export PATH=$PATH:your_edited_result`
+
+ 
